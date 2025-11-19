@@ -3,7 +3,7 @@ import { View, Text, FlatList, Image, StyleSheet } from "react-native";
 import { auth, db } from "../firebase/FirebaseConfig";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 
-export default function Profile() {
+export default function Perfil() {
   const user = auth.currentUser;
 
   const [favoritos, setFavoritos] = useState([]);
