@@ -1,71 +1,67 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Image, StyleSheet } from "react-native";
-import { auth, db } from "../firebase/FirebaseConfig";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, FlatList } from 'react-native';
+import { auth, db } from './firebase/firebaseConfig';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 export default function Perfil() {
-  const user = auth.currentUser;
-
   const [favoritos, setFavoritos] = useState([]);
 
-  useEffect(() => {
-    if (!user) return;
+  const cargarFavoritos = async () => {
+    try {
+      if (!auth.currentUser) return;
 
-    // Consulta en tiempo real
-    const q = query(collection(db, "favoritos"), where("uid", "==", user.uid));
+      const q = query(
+        collection(db, "Favoritos"),
+        where("userId", "==", auth.currentUser.uid)
+      );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const lista = snapshot.docs.map(doc => ({
+      const snap = await getDocs(q);
+
+      const lista = snap.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
-      setFavoritos(lista);
-    });
 
-    return () => unsubscribe();
+      setFavoritos(lista);
+    } catch (error) {
+      console.log("Error cargando favoritos:", error);
+    }
+  };
+
+  useEffect(() => {
+    cargarFavoritos();
   }, []);
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text style={styles.title}>Perfil</Text>
+    <View style={{ flex: 1, padding: 15 }}>
+      <Text style={{ fontSize: 24, fontWeight: "bold" }}>Perfil</Text>
 
-      <Text>Email: {user?.email}</Text>
+      <Text style={{ fontSize: 18, marginTop: 10 }}>
+        Nombre: {auth.currentUser?.email.split("@")[0]}
+      </Text>
 
-      <Text style={styles.subtitle}>Mis Personajes Favoritos</Text>
+      <Text style={{ fontSize: 18 }}>
+        Correo: {auth.currentUser?.email}
+      </Text>
+
+      <Text style={{ fontSize: 22, marginTop: 20, fontWeight: "bold" }}>
+        ❤️ Tus favoritos
+      </Text>
+
+<Text style={styles.dato}>Ganados: {userData.ganados}</Text>
+<Text style={styles.dato}>Perdidos: {userData.perdidos}</Text>
+
 
       <FlatList
         data={favoritos}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Image source={{ uri: item.imageUrl }} style={styles.img} />
-            <View>
-              <Text style={styles.name}>{item.fullName}</Text>
-              <Text style={styles.family}>{item.family}</Text>
-            </View>
+          <View style={{ marginVertical: 10, flexDirection: "row", alignItems: "center", backgroundColor: "#ddd", padding: 10, borderRadius: 10 }}>
+            <Image source={{ uri: item.imagen }} style={{ width: 80, height: 80, borderRadius: 10 }} />
+            <Text style={{ fontSize: 18, marginLeft: 15 }}>{item.nombre}</Text>
           </View>
         )}
       />
-
-      {favoritos.length === 0 && (
-        <Text style={{ marginTop: 10 }}>Aún no tienes favoritos.</Text>
-      )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  title: { fontSize: 26, fontWeight: "bold", marginBottom: 10 },
-  subtitle: { fontSize: 20, marginTop: 20, marginBottom: 10 },
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: "#eee",
-    borderRadius: 8,
-    marginBottom: 10
-  },
-  img: { width: 60, height: 60, borderRadius: 8, marginRight: 10 },
-  name: { fontSize: 18, fontWeight: "bold" },
-  family: { fontSize: 14, color: "#444" }
-});

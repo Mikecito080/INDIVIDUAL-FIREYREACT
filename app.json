@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "INDIVIDUAL-FIREYREACT",
-    "slug": "INDIVIDUAL-FIREYREACT",
+    "name": "pokeapi-native",
+    "slug": "pokeapi-native",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,8 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.mike080.individualreact"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
@@ -22,21 +21,15 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.mike080.individualreact"
+      "package": "com.diaztibata.pokeapinative"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "4c8dd17a-c645-4d30-ae11-72ece96a87d7"
+        "projectId": "dac9f01f-370d-4926-b0b2-3d3fb7d2e124"
       }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/4c8dd17a-c645-4d30-ae11-72ece96a87d7"
     }
   }
 }

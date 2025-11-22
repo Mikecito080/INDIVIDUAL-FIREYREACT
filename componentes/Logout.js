@@ -1,19 +1,30 @@
-import React, { useEffect } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/FirebaseConfig";
+import React, { useEffect } from 'react';
+import { View, ActivityIndicator, Alert } from 'react-native';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/firebaseConfig';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Logout({ navigation }) {
+export default function Logout() {
+  const navigation = useNavigation();
+
   useEffect(() => {
-    signOut(auth).then(() => {
-      navigation.replace("Login");
-    });
+    const cerrarSesion = async () => {
+      try {
+        await signOut(auth);
+        // Opcional: mostrar alerta
+        // Alert.alert('Éxito', 'Has cerrado sesión');
+        navigation.replace('Login'); // Redirige a Login y limpia historial
+      } catch (error) {
+        Alert.alert('Error al cerrar sesión', error.message);
+      }
+    };
+
+    cerrarSesion();
   }, []);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <ActivityIndicator size="large" />
-      <Text style={{ marginTop: 10 }}>Cerrando sesión...</Text>
     </View>
   );
 }
