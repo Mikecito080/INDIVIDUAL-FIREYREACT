@@ -1,5 +1,5 @@
 {
-  "name": "rickandmorty-native",
+  "name": "rickandmorty-trivia",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
