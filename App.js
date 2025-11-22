@@ -15,15 +15,26 @@ import Original from './componentes/Original';
 import Perfil from './componentes/Perfil';
 import Logout from './componentes/Logout';
 
-
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+// ------------------
+// TABS PARA LOGUEADOS
+// ------------------
+function Tabs() {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Original" component={Original} />
+      <Tab.Screen name="Perfil" component={Perfil} />
+      <Tab.Screen name="Logout" component={Logout} />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
   const [usuario, setUsuario] = useState(null);
   const [cargando, setCargando] = useState(true);
-
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -43,21 +54,19 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {usuario ? (
           <>
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Original" component={Original} />
-            <Tab.Screen name="Perfil" component={Perfil} />
-            <Tab.Screen name="Logout" component={Logout} />
+            {/* TABS SOLO PARA USUARIOS LOGUEADOS */}
+            <Stack.Screen name="Tabs" component={Tabs} />
           </>
         ) : (
           <>
-            <Tab.Screen name="Login" component={Login} />
-            <Tab.Screen name="Registro" component={Registro} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Registro" component={Registro} />
           </>
         )}
-      </Tab.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

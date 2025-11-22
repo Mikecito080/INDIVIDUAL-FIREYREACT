@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList } from 'react-native';
-import { auth, db } from './firebase/firebaseConfig';
+import { auth, db } from '../firebase/firebaseConfig';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 export default function Perfil() {
@@ -48,8 +48,7 @@ export default function Perfil() {
         ❤️ Tus favoritos
       </Text>
 
-<Text style={styles.dato}>Ganados: {userData.ganados}</Text>
-<Text style={styles.dato}>Perdidos: {userData.perdidos}</Text>
+
 
 
       <FlatList

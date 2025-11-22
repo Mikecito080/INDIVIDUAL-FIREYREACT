@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet, Alert } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from './firebase/firebaseConfig';
+import { auth, db } from '../firebase/firebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Registro() {

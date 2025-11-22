@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
-import { auth, db } from '../firebaseConfig';
+import { auth, db } from '../firebase/firebaseConfig';
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
 export default function Home({ navigation }) {

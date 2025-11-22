@@ -3,32 +3,8 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, ActivityIn
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase/firebaseConfig';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, updateDoc, increment } from "firebase/firestore";
-import { auth, db } from "../firebase/firebaseConfig";
 
-// ✔️ Sumar victoria
-const sumarVictoria = async () => {
-  const user = auth.currentUser;
-  if (!user) return;
 
-  const ref = doc(db, "usuarios", user.uid);
-  await updateDoc(ref, { ganados: increment(1) });
-};
-
-// ✔️ Sumar derrota
-const sumarDerrota = async () => {
-  const user = auth.currentUser;
-  if (!user) return;
-
-  const ref = doc(db, "usuarios", user.uid);
-  await updateDoc(ref, { perdidos: increment(1) });
-};
-
-if (resultado === "ganaste") {
-  sumarVictoria();
-} else if (resultado === "perdiste") {
-  sumarDerrota();
-}
 
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-:.\' '.split('');
